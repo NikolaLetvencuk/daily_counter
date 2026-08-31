@@ -18,7 +18,7 @@ without anything running on a local machine.
   therefore made *as the token's owner*, not as `github-actions[bot]`.
 - Makes **several commits per run**, not just one. The count is picked at
   random from the range set by `MIN_COMMITS`/`MAX_COMMITS` in the workflow's
-  `env:` block (currently **2 to 6**). Each commit increments `counter.txt`
+  `env:` block (currently **5 to 10**). Each commit increments `counter.txt`
   by 1; all of them are pushed together at the end of the run.
 - Sets the commit author to
   `NikolaLetvencuk <149421331+NikolaLetvencuk@users.noreply.github.com>`.

@@ -13,8 +13,8 @@ on:
 # Number of commits per scheduled run is picked randomly in this range.
 # Set both to the same value for a fixed count.
 env:
-  MIN_COMMITS: '2'
-  MAX_COMMITS: '6'
+  MIN_COMMITS: '5'
+  MAX_COMMITS: '10'
 
 permissions:
   contents: write
