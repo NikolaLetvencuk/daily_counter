@@ -16,14 +16,30 @@ without anything running on a local machine.
 - Checks out the repo with `actions/checkout@v4`, authenticated with the
   repository secret `PAT` rather than the default `GITHUB_TOKEN`. The push is
   therefore made *as the token's owner*, not as `github-actions[bot]`.
-- Reads `counter.txt` (creating it as `0` if missing), adds 1, writes it back.
+- Makes **several commits per run**, not just one. The count is picked at
+  random from the range set by `MIN_COMMITS`/`MAX_COMMITS` in the workflow's
+  `env:` block (currently **2 to 6**). Each commit increments `counter.txt`
+  by 1; all of them are pushed together at the end of the run.
 - Sets the commit author to
   `NikolaLetvencuk <149421331+NikolaLetvencuk@users.noreply.github.com>`.
-- Commits with the message `chore: daily counter bump` and pushes to the
-  default branch.
-- Checks `git status --porcelain counter.txt` first and exits successfully
-  without committing if there is nothing to change.
+- Uses the message `chore: daily counter bump` for every commit and pushes to
+  the default branch.
+- Checks `git status --porcelain counter.txt` before each commit and skips it
+  if nothing changed; if no commit was made at all, the run exits successfully
+  without pushing.
 - Fails fast with a clear error if the `PAT` secret is missing.
+
+### Changing the number of commits
+
+- **Permanently**: edit `MIN_COMMITS` and `MAX_COMMITS` in the `env:` block at
+  the top of the workflow. Set both to the same number for a fixed count.
+- **For one manual run**: on the **Actions** tab, **Run workflow** takes an
+  optional *How many commits to make* input. Leave it blank to use the random
+  range.
+
+Note that GitHub shades contribution squares relative to your own busiest
+days, so a constant number of commits per day produces a uniform shade
+whatever the number. The random range is what creates variation between days.
 
 `permissions: contents: write` is declared as a safeguard. It is not required
 while the checkout uses the PAT, but it means the workflow still works if the
