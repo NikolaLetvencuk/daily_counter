@@ -2,7 +2,9 @@ name: Daily commit
 
 on:
   schedule:
-    - cron: '0 6 * * *'
+    # 06:37 UTC. Deliberately off the hour: GitHub drops scheduled runs
+    # under load, and :00 is by far the most contended minute.
+    - cron: '37 6 * * *'
   workflow_dispatch:
     inputs:
       commits:
